@@ -3,6 +3,7 @@ package mumtaz.binar.studikasussatu
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
@@ -32,7 +33,10 @@ class MainActivity : AppCompatActivity() {
 
             runOnUiThread {
                 listdata.let {
-                    val adapt = AdapterStudent(it!!)
+                    val adapt = AdapterStudent(it!!){
+                        val detail = bundleOf("detail" to it)
+                        startActivity(Intent(this@MainActivity, DetailActivity::class.java), detail)
+                    }
                     rv_student.adapter = adapt
                 }
             }

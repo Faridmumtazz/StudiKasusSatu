@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_adapter_student.view.*
 
-class AdapterStudent (val listStudent : List<Student>) : RecyclerView.Adapter<AdapterStudent.ViewHolder>(){
+class AdapterStudent (val listStudent : List<Student>, private val onClick : (Student) -> Unit) : RecyclerView.Adapter<AdapterStudent.ViewHolder>(){
 
     private var mdb : StudentDatabase? = null
     class ViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView)
@@ -25,6 +25,9 @@ class AdapterStudent (val listStudent : List<Student>) : RecyclerView.Adapter<Ad
         holder.itemView.tv_nama_student.text = listStudent[position].nama
         holder.itemView.tv_email_student.text = listStudent[position].email
 
+        holder.itemView.cardItem.setOnClickListener {
+            onClick(listStudent[position])
+        }
         holder.itemView.btn_delete.setOnClickListener {
             mdb = StudentDatabase.getInstance(it.context)
 
@@ -39,6 +42,7 @@ class AdapterStudent (val listStudent : List<Student>) : RecyclerView.Adapter<Ad
                 }
                 .show()
         }
+
 
 
     }
